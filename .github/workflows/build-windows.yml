@@ -1,0 +1,20 @@
+# Builds the Windows installer and a portable .exe. Push this folder to GitHub, then open Actions > Build Windows app > the latest run > Artifacts.
+name: Build Windows app
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Rhythmhel-Windows
+          path: dist/*.exe
